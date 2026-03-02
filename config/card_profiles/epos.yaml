@@ -1,0 +1,23 @@
+# エポスカード プロファイル
+# エポスNetからダウンロードしたCSV用
+# https://www.eposcard.co.jp/
+
+name: エポスカード
+encoding: utf-8
+skip_rows: 1            # 1行目はアカウント情報のため除外
+skip_footer_rows: 1     # 最終行は合計のため除外
+delimiter: ","
+
+date_column: ご利用日
+date_format: "%Y/%m/%d"
+
+amount_column: ご利用金額(円)
+amount_sign: positive
+
+merchant_column: ご利用店名・商品名
+memo_column: null
+
+columns_to_skip:
+  - ご請求額(円)
+  - 支払区分
+  - 残りお支払い回数

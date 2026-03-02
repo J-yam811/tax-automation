@@ -1,0 +1,382 @@
+# 仕訳ルール - キーワードから勘定科目を自動判定
+#
+# 設定方法:
+#   - keywords: 店名・摘要に含まれるキーワードのリスト (いずれか1つでもマッチすれば適用)
+#   - category_code: categories.yaml の code と一致する値を指定
+#   - match_fields: 照合するフィールド ["merchant_name", "memo"]
+#   - priority: 数値が大きいほど優先度高 (デフォルト: 0)
+#   - case_sensitive: 大文字小文字を区別するか (デフォルト: false)
+#   - comment: 人間向けのコメント
+#
+# 注意: 複数のルールがマッチした場合、priority の高いものが適用されます。
+#       priorityが同じ場合は最初にマッチしたものが適用されます。
+
+rules:
+  # ============================================================
+  # 通信費 - インターネット・携帯・クラウドサービス
+  # ============================================================
+  - keywords:
+      - NTT
+      - docomo
+      - ドコモ
+      - SoftBank
+      - ソフトバンク
+      - "au "
+      - KDDI
+      - UQ mobile
+      - IIJmio
+      - mineo
+      - 楽天モバイル
+      - OCN
+      - So-net
+      - nifty
+      - BIGLOBE
+      - フレッツ
+      - ひかり電話
+    category_code: 通信費
+    match_fields: [merchant_name, memo]
+    priority: 10
+    comment: 携帯・インターネット通信会社
+
+  - keywords:
+      - さくらインターネット
+      - AWS
+      - Amazon Web Services
+      - Google Cloud
+      - GCP
+      - Azure
+      - Cloudflare
+      - Vercel
+      - Netlify
+      - Heroku
+      - DigitalOcean
+      - Linode
+      - Vultr
+      - Xserver
+      - エックスサーバー
+      - ロリポップ
+      - ConoHa
+      - お名前.com
+      - ムームードメイン
+    category_code: 通信費
+    match_fields: [merchant_name, memo]
+    priority: 10
+    comment: クラウドサーバー・ホスティング・ドメイン
+
+  - keywords:
+      - Zoom
+      - Slack
+      - Notion
+      - GitHub
+      - GitLab
+      - Bitbucket
+      - ChatGPT
+      - OpenAI
+      - Anthropic
+      - Google Workspace
+      - Microsoft 365
+      - Office 365
+      - Dropbox
+      - Box
+      - Figma
+      - Adobe
+      - Canva
+      - Linear
+      - Jira
+      - Confluence
+      - Trello
+      - Asana
+      - Monday
+      - HubSpot
+      - Salesforce
+      - freee
+      - マネーフォワード
+      - 弥生
+    category_code: 通信費
+    match_fields: [merchant_name, memo]
+    priority: 10
+    comment: SaaSビジネスツール（個人事業主は通信費として計上するのが一般的）
+
+  # ============================================================
+  # 旅費交通費 - 電車・バス・タクシー・飛行機
+  # ============================================================
+  - keywords:
+      - Suica
+      - PASMO
+      - ICOCA
+      - TOICA
+      - manaca
+      - SUGOCA
+      - nimoca
+      - はやかけん
+      - えきねっと
+      - JR
+      - 新幹線
+      - 東京メトロ
+      - 都営地下鉄
+      - 大阪メトロ
+      - 近鉄
+      - 阪急
+      - 阪神
+      - 南海
+      - 京阪
+      - 名鉄
+      - 西鉄
+      - 東急
+      - 小田急
+      - 京王
+      - 西武
+      - 東武
+      - 相鉄
+    category_code: 交通費
+    match_fields: [merchant_name, memo]
+    priority: 10
+    comment: 鉄道・交通系ICカード
+
+  - keywords:
+      - タクシー
+      - TAXI
+      - Uber
+      - GO タクシー
+      - S.RIDE
+      - DiDi
+      - 日本交通
+      - 帝都自動車
+    category_code: 交通費
+    match_fields: [merchant_name, memo]
+    priority: 10
+    comment: タクシー
+
+  - keywords:
+      - JAL
+      - ANA
+      - Peach
+      - Jetstar
+      - スカイマーク
+      - AIRDO
+      - スターフライヤー
+      - ソラシドエア
+      - skyticket
+      - エアトリ
+      - じゃらん航空券
+    category_code: 交通費
+    match_fields: [merchant_name, memo]
+    priority: 10
+    comment: 航空券
+
+  - keywords:
+      - ガソリン
+      - ENEOS
+      - エネオス
+      - 出光
+      - コスモ石油
+      - シェル
+      - BP
+      - エッソ
+      - 昭和シェル
+    category_code: 交通費
+    match_fields: [merchant_name, memo]
+    priority: 8
+    comment: ガソリン（仕事用の車がある場合）
+
+  # ============================================================
+  # 新聞図書費 - 書籍・学習サービス（高優先度でAmazonより先に評価）
+  # ============================================================
+  - keywords:
+      - Amazon Kindle
+      - Kindle
+      - 楽天Kobo
+      - honto
+      - O'Reilly
+      - 技術評論社
+      - 翔泳社
+      - 日経BP
+      - Udemy
+      - Coursera
+      - LinkedIn Learning
+      - Progate
+      - ドットインストール
+      - Schoo
+      - N予備校
+      - SkillHacks
+    category_code: 新聞図書費
+    match_fields: [merchant_name, memo]
+    priority: 15
+    comment: 電子書籍・オンライン学習 (Amazonの汎用ルールより高優先度)
+
+  # ============================================================
+  # 仕入高 - 飲食店の食材仕入れ
+  # ============================================================
+  - keywords:
+      - スーパー
+      - 業務スーパー
+      - イオン
+      - イトーヨーカドー
+      - 西友
+      - マルエツ
+      - ライフ
+      - コストコ
+      - エスマート
+      - セリア
+      - ジャム
+      - セブンイレブン
+      - ファミリーマート
+      - ローソン
+      - ミニストップ
+      - デイリーヤマザキ
+      - NewDays
+      - コンビニ
+    category_code: 仕入高
+    match_fields: [merchant_name]
+    priority: 10
+    comment: 飲食店の食材仕入れ。スーパー・コンビニ等の購入は全て仕入
+
+  # ============================================================
+  # 被服費 - ユニフォーム・作業着
+  # ============================================================
+  - keywords:
+      - Tshirtst
+      - Tシャツ
+      - ユニフォーム
+      - 作業着
+      - 制服
+      - ワークマン
+      - WORKMAN
+    category_code: 被服費
+    match_fields: [merchant_name]
+    priority: 10
+    comment: 飲食店のユニフォーム・作業着
+
+  # ============================================================
+  # 消耗品費 - 電気製品・文具・雑貨・店舗用品
+  # ============================================================
+  - keywords:
+      - Amazon
+      - AMAZON
+      - ヨドバシ
+      - ヨドバシカメラ
+      - ビックカメラ
+      - ヤマダ電機
+      - コジマ
+      - ケーズデンキ
+      - エディオン
+      - ノジマ
+      - ソフマップ
+      - LOFT
+      - ロフト
+      - 東急ハンズ
+      - TOKYU HANDS
+      - 無印良品
+      - MUJI
+      - アスクル
+      - カウネット
+      - たのめーる
+      - ダイソー
+      - ニトリ
+      - カインズ
+      - カインズホーム
+      - コメリ
+      - コーナン
+      - メルカリ
+    category_code: 消耗品費
+    match_fields: [merchant_name]
+    priority: 5
+    comment: 家電量販店・ホームセンター・100円ショップ等（店舗用消耗品）
+
+  # ============================================================
+  # 広告宣伝費
+  # ============================================================
+  - keywords:
+      - Google Ads
+      - Google広告
+      - Facebook Ads
+      - Facebook広告
+      - Meta広告
+      - Instagram広告
+      - Twitter広告
+      - X広告
+      - TikTok広告
+      - Yahoo!広告
+      - 楽天広告
+      - note
+    category_code: 広告宣伝費
+    match_fields: [merchant_name, memo]
+    priority: 10
+
+  # ============================================================
+  # 会議費 - カフェ・打ち合わせ
+  # ============================================================
+  - keywords:
+      - スターバックス
+      - Starbucks
+      - ドトール
+      - コメダ珈琲
+      - タリーズ
+      - TULLY'S
+      - PRONTO
+      - エクセルシオール
+      - サンマルクカフェ
+      - ルノアール
+      - 珈琲館
+      - ベローチェ
+    category_code: 会議費
+    match_fields: [merchant_name]
+    priority: 3
+    comment: カフェは会議費の可能性が高いが、プライベートの可能性もある。要確認
+
+  # ============================================================
+  # 地代家賃 - コワーキングスペース
+  # ============================================================
+  - keywords:
+      - WeWork
+      - コワーキング
+      - ビジネスセンター
+      - シェアオフィス
+      - テレキューブ
+      - ワークスタイリング
+      - H1T
+      - "いいオフィス"
+    category_code: 地代家賃
+    match_fields: [merchant_name, memo]
+    priority: 10
+
+  # ============================================================
+  # 消耗品費 - ドラッグストア（店舗用消耗品の可能性）
+  # ============================================================
+  - keywords:
+      - ドラッグストア
+      - ウエルシア
+      - マツモトキヨシ
+      - マツキヨ
+      - ツルハ
+      - サンドラッグ
+      - クスリのアオキ
+      - コスモス薬品
+      - スギ薬局
+    category_code: 消耗品費
+    match_fields: [merchant_name]
+    priority: 5
+    comment: ドラッグストアは店舗用消耗品（洗剤・衛生用品等）
+
+  # ============================================================
+  # 仕入高 - ファストフード・ファミレス（食材調達の可能性）
+  # ============================================================
+  - keywords:
+      - マクドナルド
+      - McDonald's
+      - モスバーガー
+      - 吉野家
+      - すき家
+      - 松屋
+      - なか卯
+      - ガスト
+      - ジョナサン
+      - デニーズ
+      - サイゼリヤ
+      - バーミヤン
+      - 餃子の王将
+      - 大戸屋
+    category_code: 仕入高
+    match_fields: [merchant_name]
+    priority: 5
+    comment: 飲食店経営のため食材調達・研究目的の可能性

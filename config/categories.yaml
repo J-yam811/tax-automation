@@ -1,0 +1,88 @@
+# 勘定科目マスタ - 個人事業主向け標準科目
+# is_deductible: false の科目は経費として計上できない (プライベート支出)
+
+categories:
+  - code: 仕入高
+    name_ja: 仕入高
+    description: 飲食店の食材・飲料の仕入れ。スーパー、業務用食品店、市場での購入など
+    is_deductible: true
+
+  - code: 被服費
+    name_ja: 被服費
+    description: ユニフォーム、作業着、制服など業務用の衣類。クリーニング代も含む
+    is_deductible: true
+
+  - code: 通信費
+    name_ja: 通信費
+    description: インターネット、携帯電話、電話代、クラウドサービス、SaaSツールなど
+    is_deductible: true
+
+  - code: 交通費
+    name_ja: 旅費交通費
+    description: 電車、バス、タクシー、新幹線、飛行機など仕事に関する移動費用
+    is_deductible: true
+
+  - code: 消耗品費
+    name_ja: 消耗品費
+    description: 文房具、PCアクセサリー、10万円未満の備品など
+    is_deductible: true
+
+  - code: 会議費
+    name_ja: 会議費
+    description: 会議・打ち合わせ時の飲食代（1人5,000円以下が目安）、会議室レンタルなど
+    is_deductible: true
+
+  - code: 接待交際費
+    name_ja: 接待交際費
+    description: 取引先との飲食、贈答品など。個人事業主は全額経費計上可能
+    is_deductible: true
+
+  - code: 広告宣伝費
+    name_ja: 広告宣伝費
+    description: Web広告、SNS広告、名刺、チラシ、Webサイト制作など
+    is_deductible: true
+
+  - code: 外注費
+    name_ja: 外注費
+    description: 外部委託費用、フリーランスへの報酬など
+    is_deductible: true
+
+  - code: 新聞図書費
+    name_ja: 新聞図書費
+    description: 書籍、雑誌、新聞、技術資料、オンライン学習サービスなど
+    is_deductible: true
+
+  - code: 地代家賃
+    name_ja: 地代家賃
+    description: 事務所や作業スペースの家賃、コワーキングスペース利用料
+    is_deductible: true
+
+  - code: 水道光熱費
+    name_ja: 水道光熱費
+    description: 電気、ガス、水道料金（自宅兼事務所の場合は按分が必要）
+    is_deductible: true
+
+  - code: 福利厚生費
+    name_ja: 福利厚生費
+    description: 従業員の福利厚生（従業員がいる場合）。青色事業専従者への支出も含む
+    is_deductible: true
+
+  - code: 損害保険料
+    name_ja: 損害保険料
+    description: 事業用の火災保険、賠償責任保険など
+    is_deductible: true
+
+  - code: 修繕費
+    name_ja: 修繕費
+    description: 事業用機器・設備の修理・メンテナンス費用
+    is_deductible: true
+
+  - code: 雑費
+    name_ja: 雑費
+    description: 他のカテゴリに当てはまらない少額の経費。年間で多くなりすぎる場合は再分類を検討
+    is_deductible: true
+
+  - code: プライベート
+    name_ja: プライベート（経費外）
+    description: 事業と無関係な個人的な支出。経費計上不可
+    is_deductible: false

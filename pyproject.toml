@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tax-automation"
+version = "0.1.0"
+description = "確定申告自動化ツール - クレジットカード明細から勘定科目を自動仕訳"
+requires-python = ">=3.11"
+dependencies = [
+    "google-generativeai>=0.8.0",
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+    "click>=8.0",
+    "pandas>=2.0",
+    "python-dotenv>=1.0",
+    "chardet>=5.0",
+    "streamlit>=1.32",
+    "eval_type_backport",
+]
+
+[project.scripts]
+tax = "tax_automation.cli:tax"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-mock>=3.0",
+    "ruff>=0.4",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

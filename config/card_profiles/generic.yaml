@@ -1,0 +1,24 @@
+# 汎用カードプロファイル - テンプレート
+#
+# このファイルをコピーして自分のカードのCSVカラム名に合わせて編集してください。
+# カラム名はCSVの1行目（ヘッダー行）に記載されている名前と完全一致させる必要があります。
+#
+# 使い方: tax process input.csv --profile generic
+
+name: Generic Card (汎用)
+encoding: utf-8         # utf-8 または shift_jis
+skip_rows: 0            # ヘッダー前にスキップする行数
+skip_footer_rows: 0     # フッター（合計行など）にスキップする行数
+delimiter: ","
+
+# 以下のカラム名をCSVのヘッダーと一致させてください
+date_column: date           # 利用日のカラム名
+date_format: "%Y-%m-%d"     # 日付フォーマット例: %Y/%m/%d, %Y-%m-%d, %m/%d/%Y
+
+amount_column: amount       # 金額のカラム名
+amount_sign: positive       # positive: 利用金額が正の数 / negative: 利用金額が負の数
+
+merchant_column: merchant   # 利用店名のカラム名
+memo_column: memo           # 摘要・備考のカラム名 (なければ null)
+
+columns_to_skip: []         # 無視するカラム名のリスト

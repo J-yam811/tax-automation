@@ -1,0 +1,22 @@
+# ごうぎんVISAカード (山陰合同銀行) プロファイル
+# Shift-JISエンコード、1行目にカード名義情報、最終行に合計
+
+name: ごうぎんVISAカード
+encoding: shift_jis
+skip_rows: 1            # 1行目の名義人情報をスキップ
+skip_footer_rows: 1     # 最終行の合計行をスキップ
+delimiter: ","
+has_header: false        # CSVにヘッダー行がない
+
+# ヘッダーなしなので列番号(0始まり)で指定
+# 列構成: 0:日付, 1:利用店名, 2:利用金額, 3:?, 4:?, 5:支払金額, 6:海外利用備考
+date_column: "0"
+date_format: "%Y/%m/%d"
+
+amount_column: "2"
+amount_sign: positive
+
+merchant_column: "1"
+memo_column: "6"
+
+columns_to_skip: []

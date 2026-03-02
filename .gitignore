@@ -1,0 +1,46 @@
+# 環境変数 (APIキーを含む - 絶対にコミットしない)
+.env
+
+# Pythonキャッシュ
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# パッケージビルド
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# 仮想環境
+.venv/
+venv/
+env/
+
+# Gemini APIキャッシュ (個人情報を含む可能性)
+cache/gemini_cache.json
+
+# 入出力データ (個人の明細情報)
+data/input/
+data/output/
+data/receipts/
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# IDEの設定
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# テスト一時ファイル
+.coverage
+htmlcov/

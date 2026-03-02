@@ -1,0 +1,24 @@
+# 楽天カード プロファイル
+# 楽天e-NAVIからダウンロードしたCSV用
+# https://www.rakuten-card.co.jp/e-navi/
+
+name: 楽天カード
+encoding: utf-8
+skip_rows: 0
+skip_footer_rows: 0
+delimiter: ","
+
+date_column: 利用日
+date_format: "%Y/%m/%d"
+
+amount_column: 利用金額
+amount_sign: positive
+
+merchant_column: 利用店名および商品名
+memo_column: 備考
+
+columns_to_skip:
+  - 支払方法
+  - 利用金額(円)
+  - 支払金額(円)
+  - 楽天ポイント
