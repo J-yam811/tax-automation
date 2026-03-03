@@ -80,10 +80,23 @@ def list_available_profiles() -> list[str]:
     )
 
 
+def _default_cache_path() -> str:
+    """キャッシュファイルのデフォルトパスを返す。
+
+    Streamlit Cloud などファイルシステムが読み取り専用の環境では /tmp を使う。
+    """
+    local_path = _PROJECT_ROOT / "cache" / "gemini_cache.json"
+    try:
+        local_path.parent.mkdir(parents=True, exist_ok=True)
+        return str(local_path)
+    except (PermissionError, OSError):
+        return "/tmp/gemini_cache.json"
+
+
 def load_app_config() -> AppConfig:
     """環境変数からアプリケーション設定を読み込む"""
     return AppConfig(
         gemini_model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
-        cache_file=os.getenv("CACHE_FILE", str(_PROJECT_ROOT / "cache" / "gemini_cache.json")),
+        cache_file=os.getenv("CACHE_FILE", _default_cache_path()),
         log_level=os.getenv("LOG_LEVEL", "INFO"),
     )
