@@ -11,6 +11,9 @@ import tempfile
 from pathlib import Path
 from decimal import Decimal
 
+from dotenv import load_dotenv
+load_dotenv()  # .env からAPIキーを読み込む
+
 import streamlit as st
 import pandas as pd
 
