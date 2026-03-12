@@ -12,7 +12,9 @@ from pathlib import Path
 from decimal import Decimal
 
 from dotenv import load_dotenv
-load_dotenv()  # .env からAPIキーを読み込む
+# streamlit_app.py と同じディレクトリの .env を絶対パスで読み込む
+_APP_DIR = Path(os.path.abspath(__file__)).parent
+load_dotenv(_APP_DIR / ".env")
 
 import streamlit as st
 import pandas as pd
