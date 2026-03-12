@@ -170,6 +170,7 @@ with st.sidebar:
             type="password",
             placeholder="AIzaSy...",
             help="Google AI Studio (aistudio.google.com) で取得できます",
+            key="gemini_api_key",
         )
         if not sidebar_api_key:
             st.warning("APIキーを入力してください")
