@@ -146,6 +146,30 @@ with st.sidebar:
     )
 
     st.markdown("---")
+    st.markdown("### 🔑 Gemini APIキー")
+
+    # 優先順位: 環境変数 → st.secrets → 手動入力
+    _env_key = os.getenv("GEMINI_API_KEY", "")
+    if not _env_key:
+        try:
+            _env_key = st.secrets.get("GEMINI_API_KEY", "")
+        except Exception:
+            pass
+
+    if _env_key:
+        st.success("APIキー設定済み ✅", icon="🔐")
+        sidebar_api_key = _env_key
+    else:
+        sidebar_api_key = st.text_input(
+            "APIキーを入力",
+            type="password",
+            placeholder="AIzaSy...",
+            help="Google AI Studio (aistudio.google.com) で取得できます",
+        )
+        if not sidebar_api_key:
+            st.warning("APIキーを入力してください")
+
+    st.markdown("---")
     st.markdown("### 📋 使い方")
     st.markdown("""
     1. **カード明細CSV**をアップロード
@@ -214,20 +238,14 @@ if not run_button:
 # ============================================================
 # 処理実行
 # ============================================================
+if not sidebar_api_key:
+    st.error("⚠️ サイドバーにGemini APIキーを入力してから実行してください。")
+    st.stop()
+
 with st.spinner("🤖 AIが仕訳処理中... しばらくお待ちください"):
     try:
-        # APIキー取得
-        api_key = os.getenv("GEMINI_API_KEY", "")
-        if not api_key:
-            try:
-                api_key = st.secrets.get("GEMINI_API_KEY", "")
-            except Exception:
-                pass
-
-        if not api_key:
-            st.error("⚠️ Gemini APIキーが設定されていません。管理者に連絡してください。")
-            st.stop()
-
+        # サイドバーで確定済みのAPIキーをenv varに設定
+        api_key = sidebar_api_key
         os.environ["GEMINI_API_KEY"] = api_key
 
         # 一時ファイルにCSVを保存
