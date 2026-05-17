@@ -6,7 +6,8 @@
       "Bash(python3 -c \":*)",
       "Bash(pip install -e \".[dev]\" -q)",
       "Bash(python3 -m pip install -e \".[dev]\" -q)",
-      "Bash(uv --version)"
+      "Bash(uv --version)",
+      "mcp__63de909f-33ed-49d3-ba65-0bd97bb76e62__create_event"
     ]
   }
 }
